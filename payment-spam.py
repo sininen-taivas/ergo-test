@@ -37,7 +37,7 @@ def transaction_gen(address, amount, num=1, prefix=None):
     res = {
         "requests": [],
         "fee": 1000000,
-        "inputsRaw": ['string']
+        "inputsRaw": []
     }
     for i in range(num):
         res['requests'].append({
@@ -52,7 +52,7 @@ def transaction_gen(address, amount, num=1, prefix=None):
 def worker(api, qtasks):
     while True:
         rnum, req_data = qtasks.get()
-
+        logging.debug(f'req for /generate {req_data}')
         code, tx_json = api.request('/wallet/transaction/generate', data=req_data)
         logging.debug(f'result: [{code}] {tx_json}')
         if code != 200:
